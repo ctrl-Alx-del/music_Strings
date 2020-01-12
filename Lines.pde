@@ -45,7 +45,6 @@ class SoundLine {
         //The sound is tied to each line through the constructor. So fx. musicString[0] has sound = 0, which is therefore 7.wav.
         guitarSounds[sound].play();
         reset = false;
-        println(reset);
       }
     } else {
       reset = true;
