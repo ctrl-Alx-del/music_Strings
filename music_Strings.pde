@@ -13,7 +13,7 @@ void setup() {
 
 
   for (int i = 0; i <= musicString.length-1; i++) {
-    musicString[i] = new SoundLine(_x+(i*spacing), lowerPos, _x+(i*spacing), 600);
+    musicString[i] = new SoundLine(_x+(i*spacing), lowerPos, 600, 5);
   }
 }
 
@@ -33,6 +33,6 @@ void draw() {
 
   //Invisible hitbox for the strings
   for (int i = 0; i <= musicString.length-1; i++) {
-    musicString[i].hitBox(tilt*i);
+    musicString[i].hitBox();
   }
 }
