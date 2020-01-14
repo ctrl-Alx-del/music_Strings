@@ -9,7 +9,6 @@ class SoundLine {
 
 
 
-
   SoundLine(int tempX, int tempY1, int tempY2, int tempThickness, int tempSound) {
     x = tempX;
     y1 = tempY1;
@@ -43,7 +42,7 @@ class SoundLine {
     if ( mouseY > y2 && mouseY < y1 && mouseX >= x-thickness/2 && mouseX <= x+thickness/2) {    
       if (reset) {
         //The sound is tied to each line through the constructor. So fx. musicString[0] has sound = 0, which is therefore 7.wav.
-        guitarSounds[sound].play();
+        guitarSounds[sound + pitch].play();
         reset = false;
       }
     } else {

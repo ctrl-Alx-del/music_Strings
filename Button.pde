@@ -2,8 +2,10 @@ class Button {
 
   int x, y, w, h;
   boolean oneClick;
+  //OutOfBounds booleans makes sure that the array does not go out of bounds and crashes the program
   boolean outOfUpperBounds;
   boolean outOfLowerBounds;
+
   boolean buttonClicked;
 
   Button(int tempX, int tempY, int tempW, int tempH) {
@@ -12,8 +14,8 @@ class Button {
     w = tempW;
     h = tempH;
     oneClick = true;
-    outOfLowerBounds = false;
-    outOfLowerBounds = false;
+    outOfUpperBounds = true;
+    outOfLowerBounds = true;
     buttonClicked = false;
   }
 
@@ -26,8 +28,8 @@ class Button {
     if (mouseX > x && mouseX < x+w && mouseY > y && mouseY < y+h && mousePressed && oneClick) {
       oneClick = false; 
       buttonClicked = true;
-      
     }
+
     //if the bellow statements are not true the set oneClick to true again. That is when mouse is outside of the box.
     if (!(mouseX > x && mouseX < x+w && mouseY > y && mouseY < y+h)) { 
       oneClick = true;
@@ -35,11 +37,30 @@ class Button {
   }
 
   void pitchUp() {
-    if (buttonClicked) {
-      println(buttonClicked);
-      for (int i = 0; i <= musicString.length-1; i++) {
-        guitarSounds[i] = guitarSounds[i+7]; 
-      }
+    if (buttonClicked && outOfUpperBounds) {
+      //buttonClicked set to false so pitch does not increase and makes guitarSounds go out of bound
+      pitch += 7;
+      buttonClicked = false;
+      println("pitchUp " + pitch);
+    }
+    if (13 < pitch) {
+      outOfUpperBounds = false;
+    } else {
+      outOfUpperBounds = true;
+    }
+  }
+
+
+  void pitchDown() {
+    if (buttonClicked && outOfLowerBounds) {
+      pitch -= 7;
+      buttonClicked = false;
+      println("pitchDown " + pitch);
+    }
+    if (pitch < 1) {
+      outOfLowerBounds = false;
+    } else {
+      outOfLowerBounds = true;
     }
   }
 }
