@@ -4,6 +4,7 @@ import processing.sound.*;
 //sounds
 SoundFile guitarSounds [] = new SoundFile [21];
 SoundLine musicString [] = new SoundLine [7];
+String [] notes = new String [guitarSounds.length];
 
 //Buttons
 Button pitchUpButton;
