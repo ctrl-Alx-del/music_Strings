@@ -42,7 +42,7 @@ class Button {
     //Text is displayed
     fill(255);
     textSize(30);
-    text("Chord " + chords[level-1], 500, 50);
+    text("Chord: " + chords[level-1], 500, 50);
     text("Pitch level " + level, 50, 50);
   }
 

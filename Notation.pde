@@ -2,13 +2,27 @@ class Notation {
 
 
   int x, y, x2, y2;
-  
+  int h, w;
+  int addNote;
+  color stroke;
 
+
+  //Constructor for the sheet
   Notation(int tempX, int tempY, int tempX2, int tempY2) {
     x = tempX;
     y = tempY;
     x2 = tempX2;
     y2 = tempY2;
+  }
+
+  //Constructor for notes. Add another parameter than tempC. They can not have the same amount of parameters with the same datatype
+  Notation(int tempX, int tempY, int tempH, int tempW, color tempStroke) {
+    x = tempX;
+    y = tempY;
+    h = tempH;
+    w = tempW;
+    addNote = 0;
+    stroke = tempStroke;
   }
 
 
@@ -25,13 +39,22 @@ class Notation {
   }
 
 
-  void notes() {
+  void notes(int a) {
     noFill();
     strokeWeight(5);
-    stroke(255);
-    for (int i = 50; i <= 500; i = i + 80) {
+    stroke(stroke);
+    //for (int i = 50; i <= 500; i = i + 80) {
       //If high note multiply y with something
-      ellipse(x+i, 50*1.5, 40/2, 30/2);
+      ellipse(x+a/*i*/, y*a, h, w);
+    //}
+  }
+
+  void noteChecker() {
+    for (int i = 0; i <= noteChecker.length-1; i++) {
+      if (noteChecker[i] == true) {
+        addNote++;
+          println(addNote);
+      }
     }
   }
 }

@@ -1,5 +1,8 @@
 import processing.sound.*;
 
+//Used in SoundLine and Notation class to only make notes getting added once on the sheet
+boolean addOnce = false;
+
 //Images
 PImage arrowUp;
 PImage arrowDown;
@@ -18,6 +21,7 @@ String [] chords = new String [numberOfSounds];
 //Visual notation
 Notation sheetMusic;
 Notation [] notes = new Notation [musicString.length];
+boolean [] noteChecker = new boolean [guitarSounds.length];
 
 //Buttons
 Button pitchUpButton;
@@ -52,14 +56,14 @@ void setup() {
   //Buttons initialized
   pitchUpButton = new Button(buttonUpX, buttonUpY, buttonSize, buttonSize, buttonUpX, buttonUpY, up);
   pitchDownButton = new Button(buttonDownX, buttonDownY, buttonSize, buttonSize, buttonDownX, buttonDownY, down);
-  
+
   int sheetX = 900; 
   int sheetY = 50;
   int sheetX2 = 1400; 
   int sheetY2 = 250;
-  
+
   //Notation initialized
-  sheetMusic = new Notation(sheetX,sheetY, sheetX2, sheetY2);
+  sheetMusic = new Notation(sheetX, sheetY, sheetX2, sheetY2);
 
   //Lower Sounds
   guitarSounds[0] = new SoundFile(this, "1.wav");
@@ -90,17 +94,32 @@ void setup() {
 
   //Initializes lines that you can play sounds on. Each line is separated with the int spacing.
   for (int i = 0; i <= musicString.length-1; i++) {
-    musicString[i] = new SoundLine(_x+(i*spacing), lowerPos, 600, 10, i + pitch, i);
+    musicString[i] = new SoundLine(_x+(i*spacing), lowerPos, 600, 10, i + pitch, i, i);
   }
-  
+
   //Initializes each note
-  for(int i = 0; i <= notes.length-1; i++) {
-    notes[i] = new Notation(50,50,50,50);
+  for (int i = 0; i <= notes.length-1; i++) {
+    notes[i] = new Notation(sheetX+20+i*70, sheetY, 20, 15, 255);
+  }
+
+  /*for (int i = 50; i <= notes.length-1; i = i + 50) {
+   notes[0] = new Notation(sheetX+i, sheetY, 20, 15 , 255);
+   notes[1] = new Notation(sheetX+i, sheetY, 20, 15 , 255);
+   notes[2] = new Notation(sheetX+i, sheetY, 20, 15 , 255);
+   notes[3] = new Notation(sheetX+i, sheetY, 20, 15 , 255);
+   notes[4] = new Notation(sheetX+i, sheetY, 20, 15 , 255);
+   notes[5] = new Notation(sheetX+i, sheetY, 20, 15 , 255);
+   notes[6] = new Notation(sheetX+i, sheetY, 20, 15 , 255);
+   }*/
+
+  //Initialize noteChecker as false
+  for (int i = 0; i <= noteChecker.length-1; i++) {
+    noteChecker[i] = false;
   }
 
   //NotesLetters initialized
   notesLetters  = new String [guitarSounds.length];
-  
+
   //First set of letters. Each set is given a letter individually.
   notesLetters[0] = "A";
   notesLetters[1] = "B";
@@ -166,7 +185,13 @@ void draw() {
   pitchDownButton.display();
   pitchDownButton.mouseOver();
   pitchDownButton.pitchDown();
-  
+
   sheetMusic.display();
-  sheetMusic.notes();
+  //sheetMusic.noteChecker();
+
+  for (int i = 0; i <= notes.length-1; i++) {
+    if (noteChecker[i]) {
+      notes[i].notes(i);
+    }
+  }
 }
