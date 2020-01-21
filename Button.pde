@@ -46,9 +46,6 @@ class Button {
     text("Pitch level " + level, 50, 50);
   }
 
-  //Change to levelText() if chords are not needed.
-  void chordText() {
-  }
 
   void mouseOver() {
     //hitbox for the box. oneClick controls that you can not hold in mousePressed.

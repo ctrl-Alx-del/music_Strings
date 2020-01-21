@@ -108,48 +108,50 @@ void setup() {
     musicString[i] = new SoundLine(_x+(i*spacing), lowerPos, 600, 10, i + pitch, i, i);
   }
 
-  //Initializes each note
-  for (int i = 0; i <= notes.length-1; i++) {
-    notes[i] = new Notation(sheetX+20+i*70, sheetY, 20, 15, 255);
-  }
-
 
   int rightAdjustment = 25;
   int noteSpaces = 75;
 
+  //Initializes each note
+  for (int i = 0; i <= notes.length-1; i++) {
+    notes[i] = new Notation(sheetX+rightAdjustment+i*noteSpaces, sheetY, 20, 15, 255);
+  }
+  
+ 
   //Variables used to calculate where the notes should be. They all start on the top line, wholeStep is used to jump 1 line, halfstep is used to jump in between lines. 
   //The numbers are the times of wholeSteps down from the first line
   int wholeStep = 50;
   int halfStep = 25;
 
-  /*
+/*
   //First set of notes
-   notes[0] = new Notation(sheetX, sheetY+wholeStep*6, noteHeight, noteWidth, 255);
-   notes[1] = new Notation(sheetX, sheetY+wholeStep*5+halfStep, noteHeight, noteWidth, 255);
-   notes[2] = new Notation(sheetX, sheetY+wholeStep*5, noteHeight, noteWidth, 255);
-   notes[3] = new Notation(sheetX, sheetY+wholeStep*4, noteHeight, noteWidth, 255);
-   notes[4] = new Notation(sheetX, sheetY+wholeStep*3+halfStep, noteHeight, noteWidth, 255);
-   notes[5] = new Notation(sheetX, sheetY+wholeStep*3, noteHeight, noteWidth, 255);
-   notes[6] = new Notation(sheetX, sheetY+wholeStep*2+halfStep, noteHeight, noteWidth, 255);
-   
-   //Second set of notes
-   notes[7] = new Notation(sheetX, sheetY+wholeStep*2+halfStep, noteHeight, noteWidth, 255);
-   notes[8] = new Notation(sheetX, sheetY+wholeStep*2, noteHeight, noteWidth, 255);
-   notes[9] = new Notation(sheetX, sheetY+wholeStep+halfStep, noteHeight, noteWidth, 255);
-   notes[10] = new Notation(sheetX, sheetY+halfStep, noteHeight, noteWidth, 255);
-   notes[11] = new Notation(sheetX, sheetY, noteHeight, noteWidth, 255);
-   notes[12] = new Notation(sheetX, sheetY-halfStep, noteHeight, noteWidth, 255);
-   notes[13] = new Notation(sheetX, sheetY+wholeStep-wholeStep, noteHeight, noteWidth, 255);
-   
-   //Third set of notes
-   notes[14] = new Notation(sheetX, sheetY+wholeStep*5, noteHeight, noteWidth, 255);
-   notes[15] = new Notation(sheetX, sheetY+wholeStep*4+halfStep, noteHeight, noteWidth, 255);
-   notes[16] = new Notation(sheetX, sheetY+wholeStep*4, noteHeight, noteWidth, 255);
-   notes[17] = new Notation(sheetX, sheetY+wholeStep*3, noteHeight, noteWidth, 255);
-   notes[18] = new Notation(sheetX, sheetY+wholeStep*2+halfStep, noteHeight, noteWidth, 255);
-   notes[19] = new Notation(sheetX, sheetY+wholeStep*2, noteHeight, noteWidth, 255);
-   notes[20] = new Notation(sheetX, sheetY+wholeStep+halfStep, noteHeight, noteWidth, 255);
-   */
+  notes[0] = new Notation(sheetX, sheetY+wholeStep*6, noteHeight, noteWidth, 255);
+  notes[1] = new Notation(sheetX, sheetY+wholeStep*5+halfStep, noteHeight, noteWidth, 255);
+  notes[2] = new Notation(sheetX, sheetY+wholeStep*5, noteHeight, noteWidth, 255);
+  notes[3] = new Notation(sheetX, sheetY+wholeStep*4, noteHeight, noteWidth, 255);
+  notes[4] = new Notation(sheetX, sheetY+wholeStep*3+halfStep, noteHeight, noteWidth, 255);
+  notes[5] = new Notation(sheetX, sheetY+wholeStep*3, noteHeight, noteWidth, 255);
+  notes[6] = new Notation(sheetX, sheetY+wholeStep*2+halfStep, noteHeight, noteWidth, 255);
+  
+
+  //Second set of notes
+  notes[7] = new Notation(sheetX, sheetY+wholeStep*2+halfStep, noteHeight, noteWidth, 255);
+  notes[8] = new Notation(sheetX, sheetY+wholeStep*2, noteHeight, noteWidth, 255);
+  notes[9] = new Notation(sheetX, sheetY+wholeStep+halfStep, noteHeight, noteWidth, 255);
+  notes[10] = new Notation(sheetX, sheetY+halfStep, noteHeight, noteWidth, 255);
+  notes[11] = new Notation(sheetX, sheetY, noteHeight, noteWidth, 255);
+  notes[12] = new Notation(sheetX, sheetY-halfStep, noteHeight, noteWidth, 255);
+  notes[13] = new Notation(sheetX, sheetY+wholeStep-wholeStep, noteHeight, noteWidth, 255);
+
+  //Third set of notes
+  notes[14] = new Notation(sheetX, sheetY+wholeStep*5, noteHeight, noteWidth, 255);
+  notes[15] = new Notation(sheetX, sheetY+wholeStep*4+halfStep, noteHeight, noteWidth, 255);
+  notes[16] = new Notation(sheetX, sheetY+wholeStep*4, noteHeight, noteWidth, 255);
+  notes[17] = new Notation(sheetX, sheetY+wholeStep*3, noteHeight, noteWidth, 255);
+  notes[18] = new Notation(sheetX, sheetY+wholeStep*2+halfStep, noteHeight, noteWidth, 255);
+  notes[19] = new Notation(sheetX, sheetY+wholeStep*2, noteHeight, noteWidth, 255);
+  notes[20] = new Notation(sheetX, sheetY+wholeStep+halfStep, noteHeight, noteWidth, 255);
+*/
 
   //Initialize noteChecker as false
   for (int i = 0; i <= noteChecker.length-1; i++) {
@@ -219,7 +221,6 @@ void draw() {
   pitchUpButton.display();
   pitchUpButton.mouseOver();
   pitchUpButton.pitchUp();
-  pitchUpButton.chordText();
 
   pitchDownButton.display();
   pitchDownButton.mouseOver();

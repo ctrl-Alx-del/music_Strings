@@ -48,5 +48,4 @@ class Notation {
       ellipse(x+i*25, adjustY+y, h, w);
     }
   }
-
 }
