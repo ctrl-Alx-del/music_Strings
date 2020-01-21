@@ -76,7 +76,6 @@ class Button {
       //Pitch gets increased with 7.
       pitch += musicString.length;
       buttonClicked = false;
-      println("pitchUp " + pitch);
       level++;
     }
     if (upperLimit < pitch) {
@@ -92,7 +91,6 @@ class Button {
       //Pitch gets decreased with 7.
       pitch -= musicString.length;
       buttonClicked = false;
-      println("pitchDown " + pitch);
       level--;
     }
     if (pitch < musicString.length) {

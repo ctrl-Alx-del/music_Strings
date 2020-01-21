@@ -25,36 +25,28 @@ class Notation {
     stroke = tempStroke;
   }
 
-
-  void display() {
+  //adjustY used to make everything move together on the y-axis
+  void display(int adjustY) {
     for (int i = 1; i <= 5; i++) {
       stroke(255);
       strokeWeight(4);
       //sheets horizontal lines
-      line(x, y*i, x2, y*i);
+      line(x, adjustY+y*i, x2, adjustY+y*i);
     }
     //sheets vertical lines
-    line(x2, y, x2, y2);
-    line(x, y, x, y2);
+    line(x2, adjustY+y, x2, adjustY+y2);
+    line(x, adjustY+y, x, adjustY+y2);
   }
 
 
-  void notes(int a) {
+  void notes(int adjustY) {
     noFill();
     strokeWeight(5);
     stroke(stroke);
-    //for (int i = 50; i <= 500; i = i + 80) {
+    for (int i = 0; i <= addNote; i++) {
       //If high note multiply y with something
-      ellipse(x+a/*i*/, y*a, h, w);
-    //}
-  }
-
-  void noteChecker() {
-    for (int i = 0; i <= noteChecker.length-1; i++) {
-      if (noteChecker[i] == true) {
-        addNote++;
-          println(addNote);
-      }
+      ellipse(x+i*25, adjustY+y, h, w);
     }
   }
+
 }
