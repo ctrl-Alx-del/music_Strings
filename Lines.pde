@@ -56,16 +56,11 @@ class SoundLine {
         //The sound is tied to each line through the constructor. So fx. musicString[0] has sound = 0, which is therefore 7.wav.
         guitarSounds[sound + pitch].play();
         reset = false;
-        // Adds a note to the music sheet
-        addNote++;
+        // Adds a note to the music sheet. Uses modulo, resets number to 0 when addNote reaches 8.
+        addNote = (addNote + 1) % 8;
       }
     } else {
       reset = true;
-    }
-    
-    // When addNote is above 7 it is reset to 0. This makes the notes disappear so new ones can get drawn.
-    if (addNote > musicString.length) {
-      addNote = 0;
     }
   }
 }

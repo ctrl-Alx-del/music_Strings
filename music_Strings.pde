@@ -113,9 +113,9 @@ void setup() {
   int noteSpaces = 75;
 
   //Initializes each note
-  for (int i = 0; i <= notes.length-1; i++) {
+ /* for (int i = 0; i <= notes.length-1; i++) {
     notes[i] = new Notation(sheetX+rightAdjustment+i*noteSpaces, sheetY, 20, 15, 255);
-  }
+  }*/
   
  
   //Variables used to calculate where the notes should be. They all start on the top line, wholeStep is used to jump 1 line, halfstep is used to jump in between lines. 
@@ -123,7 +123,7 @@ void setup() {
   int wholeStep = 50;
   int halfStep = 25;
 
-/*
+
   //First set of notes
   notes[0] = new Notation(sheetX, sheetY+wholeStep*6, noteHeight, noteWidth, 255);
   notes[1] = new Notation(sheetX, sheetY+wholeStep*5+halfStep, noteHeight, noteWidth, 255);
@@ -151,7 +151,7 @@ void setup() {
   notes[18] = new Notation(sheetX, sheetY+wholeStep*2+halfStep, noteHeight, noteWidth, 255);
   notes[19] = new Notation(sheetX, sheetY+wholeStep*2, noteHeight, noteWidth, 255);
   notes[20] = new Notation(sheetX, sheetY+wholeStep+halfStep, noteHeight, noteWidth, 255);
-*/
+
 
   //Initialize noteChecker as false
   for (int i = 0; i <= noteChecker.length-1; i++) {
@@ -231,9 +231,12 @@ void draw() {
 
   sheetMusic.display(yPosSheet);
 
-  for (int i = 0; i <= notes.length-1; i++) {
+  /*for (int i = 0; i <= notes.length-1; i++) {
     if (noteChecker[i]) {
       notes[i].notes(yPosSheet);
     }
-  }
+  }*/
+  
+  println(addNote);
+  
 }
