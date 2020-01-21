@@ -11,6 +11,7 @@ class SoundLine {
   //Used to make each string have its individual boolean turn on
   int noteFollow;
   boolean reset;
+  int textSize;
 
 
   SoundLine(int tempX, int tempY1, int tempY2, int tempThickness, int tempSound, int tempText, int tempNoteFollow) {
@@ -21,10 +22,11 @@ class SoundLine {
     thickness = tempThickness;
     sound = tempSound;
     text = tempText;
-    textY = 180;
+    textY = 235;
     textX = 35;
     noteFollow = tempNoteFollow;
     reset = true;
+    textSize = 80;
   }
 
 
@@ -48,7 +50,7 @@ class SoundLine {
   void hitBox (int alignX, int alignY) {
     //Only plays sound once while you are inside the line otherwise it doesn't repeat it
     if ( mouseY > y2 && mouseY < y1 && mouseX >= x-thickness/2 && mouseX <= x+thickness/2) {
-      textSize(100);
+      textSize(textSize);
       text(notesLetters[text + pitch], textX+alignX, textY+alignY);
       noteChecker[noteFollow + pitch] = true;
 

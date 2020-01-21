@@ -26,26 +26,28 @@ class Notation {
   }
 
   //adjustY used to make everything move together on the y-axis
-  void display(int adjustY) {
+  void display(int adjustY, int adjustX) {
     for (int i = 1; i <= 5; i++) {
-      stroke(255);
+      stroke(0);
       strokeWeight(4);
+     
       //sheets horizontal lines
-      line(x, adjustY+y*i, x2, adjustY+y*i);
+      line(x+adjustX, adjustY+y*i, x2+adjustX, adjustY+y*i);
     }
     //sheets vertical lines
-    line(x2, adjustY+y, x2, adjustY+y2);
-    line(x, adjustY+y, x, adjustY+y2);
+    line(x2+adjustX, adjustY+y, x2+adjustX, adjustY+y2);
+    line(x+adjustX, adjustY+y, x+adjustX, adjustY+y2);
   }
 
 
-  void notes(int adjustY) {
+  void notes(int adjustY, int adjustX) {
     noFill();
     strokeWeight(5);
-    stroke(stroke);
+    stroke(0);
     for (int i = 0; i <= addNote; i++) {
       //If high note multiply y with something
-      ellipse(x+i*25, adjustY+y, h, w);
+      ellipse(x+i*25+adjustX, adjustY+y, h, w);
+      println(x);
     }
   }
 }

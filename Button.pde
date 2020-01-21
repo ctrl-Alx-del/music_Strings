@@ -10,7 +10,7 @@ class Button {
   int buttonY;
   String direction;
   color boxColor;
-
+  int textX, textY;
 
   Button(int tempX, int tempY, int tempW, int tempH, int tempButtonX, int tempButtonY, String tempDirection) {
     x = tempX;
@@ -24,7 +24,9 @@ class Button {
     buttonX = tempButtonX;
     buttonY = tempButtonY;
     direction = tempDirection;
-    boxColor = 255;
+    boxColor = #FFEB05;
+    textX = 50;
+    textY = 35;
   }
 
   void display() {
@@ -40,10 +42,10 @@ class Button {
     }
     
     //Text is displayed
-    fill(255);
+    fill(0);
     textSize(30);
-    text("Chord: " + chords[level-1], 500, 50);
-    text("Pitch level " + level, 50, 50);
+    //text("Chord: " + chords[level-1], 500, 50);
+    text("Pitch level " + level, textX, textY);
   }
 
 
@@ -58,7 +60,7 @@ class Button {
     if (mouseX > x && mouseX < x+w && mouseY > y && mouseY < y+h && mousePressed && outOfUpperBounds && outOfLowerBounds) {
       boxColor = 150;
     } else {
-      boxColor = 255;
+      boxColor = #FFEB05;
     }
 
     //if the bellow statements are not true the set oneClick to true again. That is when mouse is outside of the box.

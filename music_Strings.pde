@@ -6,6 +6,7 @@ boolean addOnce = false;
 //Images
 PImage arrowUp;
 PImage arrowDown;
+PImage guitarBackground;
 
 //sounds
 //numberOfSounds are the sets of sounds. Now it is 3 sets of 7
@@ -32,8 +33,8 @@ Button pitchUpButton;
 Button pitchDownButton;
 
 //musicStrings variables
-int lowerPos = 700;
-int upperPos = 200; // The maximum length a line can get to
+int lowerPos = 750;
+int upperPos = 250; // The maximum length a line can get to
 int middlePos = upperPos-lowerPos;
 
 int tilt = 50; // Controls how much each line should be lower than the other
@@ -47,15 +48,15 @@ int spacing = 100;
 int addNote;
 
 void setup() {
-  size(1600, 800);
+  size(1300, 800);
   //x coordinate for the first musicString
   int _x = 50; 
 
   //Button coordinates
   int buttonUpX = 300;
   int buttonDownX = 400;
-  int buttonUpY = 50;
-  int buttonDownY = 50;
+  int buttonUpY = 170;
+  int buttonDownY = 170;
   int buttonSize = 50;
 
   //Strings are used to control which button should be displayed. Otherwise fx. two up arrows would be displayed at each button
@@ -113,9 +114,9 @@ void setup() {
   int noteSpaces = 75;
 
   //Initializes each note
- /* for (int i = 0; i <= notes.length-1; i++) {
+  for (int i = 0; i <= notes.length-1; i++) {
     notes[i] = new Notation(sheetX+rightAdjustment+i*noteSpaces, sheetY, 20, 15, 255);
-  }*/
+  }
   
  
   //Variables used to calculate where the notes should be. They all start on the top line, wholeStep is used to jump 1 line, halfstep is used to jump in between lines. 
@@ -123,7 +124,7 @@ void setup() {
   int wholeStep = 50;
   int halfStep = 25;
 
-
+/*
   //First set of notes
   notes[0] = new Notation(sheetX, sheetY+wholeStep*6, noteHeight, noteWidth, 255);
   notes[1] = new Notation(sheetX, sheetY+wholeStep*5+halfStep, noteHeight, noteWidth, 255);
@@ -141,7 +142,7 @@ void setup() {
   notes[10] = new Notation(sheetX, sheetY+halfStep, noteHeight, noteWidth, 255);
   notes[11] = new Notation(sheetX, sheetY, noteHeight, noteWidth, 255);
   notes[12] = new Notation(sheetX, sheetY-halfStep, noteHeight, noteWidth, 255);
-  notes[13] = new Notation(sheetX, sheetY+wholeStep-wholeStep, noteHeight, noteWidth, 255);
+  notes[13] = new Notation(sheetX, sheetY-wholeStep, noteHeight, noteWidth, 255);
 
   //Third set of notes
   notes[14] = new Notation(sheetX, sheetY+wholeStep*5, noteHeight, noteWidth, 255);
@@ -151,7 +152,7 @@ void setup() {
   notes[18] = new Notation(sheetX, sheetY+wholeStep*2+halfStep, noteHeight, noteWidth, 255);
   notes[19] = new Notation(sheetX, sheetY+wholeStep*2, noteHeight, noteWidth, 255);
   notes[20] = new Notation(sheetX, sheetY+wholeStep+halfStep, noteHeight, noteWidth, 255);
-
+*/
 
   //Initialize noteChecker as false
   for (int i = 0; i <= noteChecker.length-1; i++) {
@@ -196,11 +197,16 @@ void setup() {
   //Images
   arrowUp = loadImage("arrowUp.png");
   arrowDown = loadImage("arrowDown.png");
+  
+  //Image reference: https://www.needpix.com/photo/download/1837726/music-background-music-note-digital-paper-piano-melody-texture-scrapbook-pattern-musical
+  guitarBackground = loadImage("guitarbackground.jpg");
 }
 
 
 void draw() {
   background(0);
+  image(guitarBackground, 0, 0);
+  
   //First musicString in the array is the one most left and so on
   for (int i = 0; i <= musicString.length-1; i++) { 
     musicString[i].display();
@@ -228,15 +234,13 @@ void draw() {
 
   //YposSheet is for moving the notes and sheet around on the y-axis
   int yPosSheet = 100;
+  int xPosSheet = -200;
 
-  sheetMusic.display(yPosSheet);
+  sheetMusic.display(yPosSheet,xPosSheet);
 
-  /*for (int i = 0; i <= notes.length-1; i++) {
+  for (int i = 0; i <= notes.length-1; i++) {
     if (noteChecker[i]) {
-      notes[i].notes(yPosSheet);
+      notes[i].notes(yPosSheet,xPosSheet);
     }
-  }*/
-  
-  println(addNote);
-  
+  }  
 }
