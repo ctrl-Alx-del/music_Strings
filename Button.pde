@@ -11,6 +11,7 @@ class Button {
   String direction;
   color boxColor;
   int textX, textY;
+  int clefXAdjust, clefYAdjust;
 
   Button(int tempX, int tempY, int tempW, int tempH, int tempButtonX, int tempButtonY, String tempDirection) {
     x = tempX;
@@ -27,6 +28,8 @@ class Button {
     boxColor = #FFEB05;
     textX = 50;
     textY = 35;
+    clefXAdjust = -100;
+    clefYAdjust = 100;
   }
 
   void display() {
@@ -34,17 +37,26 @@ class Button {
     fill(boxColor);
     stroke(boxColor);
     rect(x, y, w, h);
+    //Shows the corresponding image if the button has a string called "up" or "down"
     if ( direction == "up") {
       image(arrowUp, buttonX, buttonY);
     }
     if ( direction == "down") {
       image(arrowDown, buttonX, buttonY);
     }
-    
+
     //Text is displayed
     fill(0);
     textSize(30);
     text("Pitch level " + level, textX, textY);
+
+    //Images 
+    //The clef changes depending on the level of pitch
+    if ( level > 2) {
+      image(gclef, sheetX+clefXAdjust+xPosSheet, sheetY+clefYAdjust+yPosSheet);
+    } else {
+      image(fclef, sheetX+clefXAdjust+xPosSheet, sheetY+clefYAdjust+yPosSheet);
+    }
   }
 
 

@@ -28,6 +28,9 @@ int sheetX = 900;
 int sheetY = 50;
 int sheetX2 = 1400; 
 int sheetY2 = 250;
+//YposSheet is for moving the notes and sheet around on the y-axis
+int yPosSheet = 150;
+int xPosSheet = -200;
 
 //Note sizes
 int noteHeight = 20;
@@ -43,11 +46,10 @@ int upperPos = 250; // The maximum length the first line can get to
 int upperPosStart = 600; //upperPosStart is where all the lines start at. Should always be lower than upperPos or else all the strings will be above their limit to start with. 
 int _x = 50; //x coordinate for the first musicString
 int _thickness = 10; //Thickness of the lines
-//spacing = 100 gives a spacing that fits the window. Can be changed for bigger windows
-int spacing = 100;
-
-
+int spacing = 100; //spacing = 100 gives a spacing that fits the window. Can be changed for bigger windows
 int tilt = 50; // Controls how much each line should be lower than the other
+
+
 int pitch = 0; //Variable to switch the guitarSounds array to the deeper or higher sounds
 int level = 1; //Used to visually see what level of pitch you are on
 
@@ -212,6 +214,8 @@ void setup() {
 
   //Image reference: https://www.needpix.com/photo/download/1837726/music-background-music-note-digital-paper-piano-melody-texture-scrapbook-pattern-musical
   guitarBackground = loadImage("guitarbackground.jpg");
+  gclef = loadImage("gclef.png");
+  fclef = loadImage("fclef.png");
 }
 
 
@@ -244,9 +248,6 @@ void draw() {
   pitchDownButton.mouseOver();
   pitchDownButton.pitchDown();
 
-  //YposSheet is for moving the notes and sheet around on the y-axis
-  int yPosSheet = 100;
-  int xPosSheet = -200;
 
   //The music sheet where the notes are on
   sheetMusic.display(yPosSheet, xPosSheet);
