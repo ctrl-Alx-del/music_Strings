@@ -4,6 +4,8 @@ import processing.sound.*;
 PImage arrowUp;
 PImage arrowDown;
 PImage guitarBackground;
+PImage gclef;
+PImage fclef;
 
 //sounds
 //numberOfSounds are the sets of sounds. Now it is 3 sets of 7
