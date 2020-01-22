@@ -69,13 +69,14 @@ class Button {
   }
 
   void pitchUp() {
-    //buttonClicked set to false so pitch does not increase and makes guitarSounds go out of bound
+    //buttonClicked set to false so pitch does not increase indefinetly and makes guitarSounds go out of bound
     if (buttonClicked && outOfUpperBounds) {
       //Pitch gets increased with 7.
       pitch += musicString.length;
       buttonClicked = false;
       level++;
     }
+    //If pitch is above the upperlimit it will activate outOFUpperBounds so you can not increase the pitch anymore
     if (upperLimit < pitch) {
       outOfUpperBounds = false;
     } else {

@@ -3,7 +3,6 @@ class Notation {
 
   int x, y, x2, y2;
   int h, w;
-  int addNote;
   color stroke;
 
 
@@ -21,7 +20,6 @@ class Notation {
     y = tempY;
     h = tempH;
     w = tempW;
-    addNote = 0;
     stroke = tempStroke;
   }
 
@@ -30,7 +28,7 @@ class Notation {
     for (int i = 1; i <= 5; i++) {
       stroke(0);
       strokeWeight(4);
-     
+
       //sheets horizontal lines
       line(x+adjustX, adjustY+y*i, x2+adjustX, adjustY+y*i);
     }
@@ -44,9 +42,15 @@ class Notation {
     noFill();
     strokeWeight(5);
     stroke(0);
+    /*for (int i = 1; i <= musicString.length-1; i++) {
+      noteX[i] = sheetX+50*i;
+    }*/
+
+
     for (int i = 0; i <= addNote; i++) {
       //If high note multiply y with something
-      ellipse(x+i*75+adjustX, adjustY+y, h, w);
+      ellipse(x, adjustY+y, h, w);
     }
+    println(noteX);
   }
 }

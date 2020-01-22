@@ -8,6 +8,7 @@ class SoundLine {
   int text;
   int textX;
   int textY;
+  color c; 
   
   //Used to make each string have its individual boolean turn on
   int noteFollow;
@@ -28,11 +29,12 @@ class SoundLine {
     noteFollow = tempNoteFollow;
     reset = true;
     textSize = 80;
+    c = 255;
   }
 
 
   void display() {
-    stroke(255);
+    stroke(c);
     strokeWeight(thickness);
     //The strings 
     line(x, y1, x, y2);
@@ -54,6 +56,9 @@ class SoundLine {
       textSize(textSize);
       text(notesLetters[text + pitch], textX+alignX, textY+alignY);
       noteChecker[noteFollow + pitch] = true;
+      
+      //Color yellow if you hit the line. In hexadecimal Red is (F = 240 + E = 14) = 254, Green is (F = 240 + F = 15) = 255, Blue is (0 + 5) = 5.
+      c = #FEFF05;
 
       if (reset) {
         //The sound is tied to each line through the constructor. So fx. musicString[0] has sound = 0, which is therefore 7.wav.
@@ -64,6 +69,8 @@ class SoundLine {
       }
     } else {
       reset = true;
+      c = 255;
+      noteChecker[noteFollow + pitch] = false;
     }
   }
 }
