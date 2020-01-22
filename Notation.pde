@@ -46,8 +46,7 @@ class Notation {
     stroke(0);
     for (int i = 0; i <= addNote; i++) {
       //If high note multiply y with something
-      ellipse(x+i*25+adjustX, adjustY+y, h, w);
-      println(x);
+      ellipse(x+i*75+adjustX, adjustY+y, h, w);
     }
   }
 }

@@ -8,6 +8,7 @@ class SoundLine {
   int text;
   int textX;
   int textY;
+  
   //Used to make each string have its individual boolean turn on
   int noteFollow;
   boolean reset;
