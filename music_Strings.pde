@@ -179,10 +179,10 @@ void setup() {
 
   //Images
   arrowUp = loadImage("arrowUp.png"); //arrow image downloaded from: https://www.pngfuel.com/free-png/ofonr
-  arrowDown = loadImage("arrowDown.png");
+  arrowDown = loadImage("arrowDown.png"); //Same arrow just flipped
   guitarBackground = loadImage("guitarbackground.jpg"); //Image reference: https://www.needpix.com/photo/download/1837726/music-background-music-note-digital-paper-piano-melody-texture-scrapbook-pattern-musical
-  gclef = loadImage("gclef.png"); //
-  fclef = loadImage("fclef.png"); //
+  gclef = loadImage("gclef.png"); //Image reference: https://www.pngfuel.com/free-png/azmmd
+  fclef = loadImage("fclef.png"); //Image reference: https://www.pngfuel.com/free-png/fbikh
 }
 
 
