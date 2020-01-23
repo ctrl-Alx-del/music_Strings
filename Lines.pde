@@ -1,21 +1,19 @@
 class SoundLine {
 
-  float x, y1, y2;
-  float speed;
-  int limit;
-  int thickness;
+  float x, y1, y2; //coordinates of the musicStrings/lines
+  float speed; //Rate of how quick the animation of the lines going upwards is
+  int limit; //Limit where the lines should stop
+  int thickness; //Thickness of the lines
   int sound;
-  int text;
-  int textX;
+  int text; //The text from noteLetters is tied which each line through the for-loop on line 108 main program.
+  int textX; //text placement
   int textY;
-  color c; 
-  
-  //Used to make each string have its individual boolean turn on
-  int noteFollow;
-  boolean reset;
+  color c; //Color of the line
+  int noteFollow; //Used to make each string have its individual boolean with the for-loop on line 108 main program
+  boolean reset; //Used to make the sound only play once
   int textSize;
 
-
+  //Constructor for the lines
   SoundLine(int tempX, int tempY1, int tempY2, int tempThickness, int tempSound, int tempText, int tempNoteFollow) {
     x = tempX;
     y1 = tempY1;
@@ -36,7 +34,7 @@ class SoundLine {
   void display() {
     stroke(c);
     strokeWeight(thickness);
-    //The strings 
+    //The musicStrings/lines 
     line(x, y1, x, y2);
   }
 
@@ -51,26 +49,20 @@ class SoundLine {
 
 
   void hitBox (int alignX, int alignY) {
-    //Only plays sound once while you are inside the line otherwise it doesn't repeat it
     if ( mouseY > y2 && mouseY < y1 && mouseX >= x-thickness/2 && mouseX <= x+thickness/2) {
       textSize(textSize);
-      text(notesLetters[text + pitch], textX+alignX, textY+alignY);
-      noteChecker[noteFollow + pitch] = true;
-      
-      //Color yellow if you hit the line. In hexadecimal Red is (F = 240 + E = 14) = 254, Green is (F = 240 + F = 15) = 255, Blue is (0 + 5) = 5.
-      c = #FEFF05;
+      text(notesLetters[text + pitch], textX+alignX, textY+alignY); //The noteLetters array is used to display characters above each line played. AlignX and AlignY recieves arguments that make them follow each line down.
+      noteChecker[noteFollow + pitch] = true; //noteChecker is set to true if a note is hit. Pitch is used to go to the next set of booleans that are tied to the next set of lines     
+      c = #FEFF05; //Color yellow if you hit the line. In hexadecimal Red is (F = 240 + E = 14) = 254, Green is (F = 240 + F = 15) = 255, Blue is (0 + 5) = 5.
 
-      if (reset) {
-        //The sound is tied to each line through the constructor. So fx. musicString[0] has sound = 0, which is therefore 7.wav.
-        guitarSounds[sound + pitch].play();
-        reset = false;
-        // Adds a note to the music sheet. Uses modulo, resets number to 0 when addNote reaches 8.
-        addNote = (addNote + 1) % 8;
+      if (reset) {      
+        guitarSounds[sound + pitch].play(); //The sounds are tied to each line through for-loop in the main program line 108. So fx. musicString[0] has sound = 0, which is therefore 7.wav.
+        reset = false; //reset makes the sound only play once. Sound only plays while both reset and the above if-statement on line 53 is true.
       }
     } else {
       reset = true;
-      c = 255;
-      noteChecker[noteFollow + pitch] = false;
+      c = 255; //set to white if the hitbox is not hit
+      noteChecker[noteFollow + pitch] = false; //noteChecker is set to false when you do not hit a lines hitbox
     }
   }
 }

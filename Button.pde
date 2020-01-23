@@ -1,19 +1,17 @@
 class Button {
 
   int x, y, w, h;
-  boolean oneClick;
-  //OutOfBounds booleans makes sure that the array does not go out of bounds and crashes the program
-  boolean outOfUpperBounds;
+  boolean oneClick; //Used so you can only click once and will not click if you hold the mouse button down
+  boolean outOfUpperBounds; //OutOfBounds booleans makes sure that the array does not go out of bounds and crashes the program
   boolean outOfLowerBounds;
-  boolean buttonClicked;
-  int buttonX;
-  int buttonY;
-  String direction;
-  color boxColor;
-  int textX, textY;
-  int clefXAdjust, clefYAdjust;
+  boolean buttonClicked; //Checks if the button is clicked. Used line 80-83 and 96-99 so the pitch buttons only increase pitch and level once.
+  String direction; //Used to check which image should be displayed line 40-44
+  color boxColor; //Button color
+  int textX, textY; //Text placement
+  int clefXAdjust, clefYAdjust; //Adjustment to the clefs so they stay besides the music sheet
 
-  Button(int tempX, int tempY, int tempW, int tempH, int tempButtonX, int tempButtonY, String tempDirection) {
+  //Constructor for the buttons
+  Button(int tempX, int tempY, int tempW, int tempH, String tempDirection) {
     x = tempX;
     y = tempY;
     w = tempW;
@@ -22,10 +20,8 @@ class Button {
     outOfUpperBounds = true;
     outOfLowerBounds = true;
     buttonClicked = false;
-    buttonX = tempButtonX;
-    buttonY = tempButtonY;
     direction = tempDirection;
-    boxColor = #FFEB05;
+    boxColor = 150;
     textX = 50;
     textY = 35;
     clefXAdjust = -100;
@@ -33,16 +29,16 @@ class Button {
   }
 
   void display() {
-    //arrow image downloaded from: https://www.pngfuel.com/free-png/ofonr
     fill(boxColor);
     stroke(boxColor);
+    //The rectangle for the buttons
     rect(x, y, w, h);
-    //Shows the corresponding image if the button has a string called "up" or "down"
+    //Shows the corresponding image if the button has a string called "up" or "down". Else the images would get shown on both buttons when the function is called on each object.
     if ( direction == "up") {
-      image(arrowUp, buttonX, buttonY);
+      image(arrowUp, x, y);
     }
     if ( direction == "down") {
-      image(arrowDown, buttonX, buttonY);
+      image(arrowDown, x, y);
     }
 
     //Text is displayed
@@ -51,8 +47,8 @@ class Button {
     text("Pitch level " + level, textX, textY);
 
     //Images 
-    //The clef changes depending on the level of pitch
-    if ( level > 2) {
+    //The clef changes depending on the level of pitch. If level is above 2 it changes to a g-clef, else it is a f-clef
+    if ( level > 2) {    
       image(gclef, sheetX+clefXAdjust+xPosSheet, sheetY+clefYAdjust+yPosSheet);
     } else {
       image(fclef, sheetX+clefXAdjust+xPosSheet, sheetY+clefYAdjust+yPosSheet);
@@ -61,34 +57,33 @@ class Button {
 
 
   void mouseOver() {
-    //hitbox for the box. oneClick controls that you can not hold in mousePressed.
+    //Hitbox for the buttons. oneClick controls that you can not hold in mousePressed.
     if (mouseX > x && mouseX < x+w && mouseY > y && mouseY < y+h && mousePressed && oneClick) {
       oneClick = false; 
       buttonClicked = true;
     }
 
-    //hitbox for the box. Switches color when you click goes back to original color afterwards. You can not switch color if it is out of bounds
+    //Hitbox for the button. Switches color when you click goes back to original color afterwards. You can not switch color if it is out of bounds
     if (mouseX > x && mouseX < x+w && mouseY > y && mouseY < y+h && mousePressed && outOfUpperBounds && outOfLowerBounds) {
       boxColor = 150;
     } else {
       boxColor = #FFEB05;
     }
 
-    //if the bellow statements are not true the set oneClick to true again. That is when mouse is outside of the box.
+    //If the bellow statements are not true then set oneClick to true again. That is when mouse is outside of the button boundaries.
     if (!(mouseX > x && mouseX < x+w && mouseY > y && mouseY < y+h)) { 
       oneClick = true;
     }
   }
 
   void pitchUp() {
-    //buttonClicked set to false so pitch does not increase indefinetly and makes guitarSounds go out of bound
+    //buttonClicked set to false so pitch does not increase indefinetly and makes guitarSounds go out of bounds
     if (buttonClicked && outOfUpperBounds) {
-      //Pitch gets increased with 7.
-      pitch += musicString.length;
+      pitch += musicString.length;  //pitch gets increased with 7.
       buttonClicked = false;
       level++;
     }
-    //If pitch is above the upperlimit it will activate outOFUpperBounds so you can not increase the pitch anymore
+    //If pitch is above the upperlimit it will activate outOFUpperBounds so you can not increase the pitch anymore. Same goes for line 101-104, just with outOfLowerBounds instead.
     if (upperLimit < pitch) {
       outOfUpperBounds = false;
     } else {
@@ -98,9 +93,8 @@ class Button {
 
 
   void pitchDown() {
-    if (buttonClicked && outOfLowerBounds) {
-      //Pitch gets decreased with 7.
-      pitch -= musicString.length;
+    if (buttonClicked && outOfLowerBounds) { 
+      pitch -= musicString.length; //Pitch gets decreased with 7.
       buttonClicked = false;
       level--;
     }

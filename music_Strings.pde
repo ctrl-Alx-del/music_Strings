@@ -8,33 +8,32 @@ PImage gclef;
 PImage fclef;
 
 //sounds
-//numberOfSounds are the sets of sounds. Now it is 3 sets of 7
-int numberOfSounds = 3;
+int numberOfSounds = 3; //numberOfSounds are the sets of sounds. Now it is 3 sets of 7
 SoundLine musicString [] = new SoundLine [7];
-float upperLimit = musicString.length*numberOfSounds*2/3-1;
+float upperLimit = musicString.length*numberOfSounds*2/3-1; //Upper limit calculated so that pitch will not go out of bounds. It is always two-thirds so you can add more sounds with the numberOfSounds variable and the limit will follow
 SoundFile guitarSounds [] = new SoundFile [musicString.length*numberOfSounds];
 
 //Visual feedback
-String [] notesLetters = new String [guitarSounds.length];
+char [] notesLetters = new char [guitarSounds.length];
 
 //Visual notation
-Notation sheetMusic;
-Notation [] notes = new Notation [guitarSounds.length];
-boolean [] noteChecker = new boolean [guitarSounds.length];
-int [] noteX = new int [10];
+Notation sheetMusic; //The music sheet where the notes go onto
+Notation [] notes = new Notation [guitarSounds.length]; //An array of notes 
+boolean [] noteChecker = new boolean [guitarSounds.length]; //An array of booleans to control which note should be displayed
 
 //Music sheet coordinates
 int sheetX = 900; 
 int sheetY = 50;
 int sheetX2 = 1400; 
 int sheetY2 = 250;
-//YposSheet is for moving the notes and sheet around on the y-axis
-int yPosSheet = 150;
-int xPosSheet = -200;
+int yPosSheet = 150; //YposSheet is for moving the notes and sheet around on the y-axis. The same goes for XposSheet.
+int xPosSheet = -200; 
+int noteMiddle = 250; //Adjusts the notes to always be in the middle of the music sheet
 
 //Note sizes
 int noteHeight = 20;
 int noteWidth = 15;
+int noteStroke = 0;
 
 //Buttons
 Button pitchUpButton;
@@ -49,33 +48,28 @@ int _thickness = 10; //Thickness of the lines
 int spacing = 100; //spacing = 100 gives a spacing that fits the window. Can be changed for bigger windows
 int tilt = 50; // Controls how much each line should be lower than the other
 
-
+//Button variables
 int pitch = 0; //Variable to switch the guitarSounds array to the deeper or higher sounds
 int level = 1; //Used to visually see what level of pitch you are on
 
+//Button coordinates
+int buttonUpX = 300;
+int buttonUpY = 170; 
+int buttonDownX = 400;
+int buttonDownY = 170;
+int buttonSize = 50;
 
-//Makes a new note appear on screen everytime a musicString is played
-int addNote;
+//Strings are used to control which button should be displayed. Otherwise fx. two up arrows would be displayed at each button, because the display function is called on both.
+String up = "up";
+String down = "down";
+
 
 void setup() {
   size(1300, 800);
 
-  //Button coordinates
-  int buttonUpX = 300;
-  int buttonUpY = 170; 
-  int buttonDownX = 400;
-  int buttonDownY = 170;
-  int buttonSize = 50;
-
-  //Strings are used to control which button should be displayed. Otherwise fx. two up arrows would be displayed at each button
-  String up = "up";
-  String down = "down";
-
   //Buttons initialized
-  pitchUpButton = new Button(buttonUpX, buttonUpY, buttonSize, buttonSize, buttonUpX, buttonUpY, up);
-  pitchDownButton = new Button(buttonDownX, buttonDownY, buttonSize, buttonSize, buttonDownX, buttonDownY, down);
-
-
+  pitchUpButton = new Button(buttonUpX, buttonUpY, buttonSize, buttonSize, up);
+  pitchDownButton = new Button(buttonDownX, buttonDownY, buttonSize, buttonSize, down);
 
   //Notation initialized
   sheetMusic = new Notation(sheetX, sheetY, sheetX2, sheetY2);
@@ -108,13 +102,13 @@ void setup() {
   guitarSounds[19] = new SoundFile(this, "A#5.wav");
   guitarSounds[20] = new SoundFile(this, "C6.wav");
 
-  //Initializes lines that you can play sounds on. Each line is separated with the int spacing.
+  //Initializes lines that you can play sounds on. Each line is separated with the int spacing. i ties each musicString[i] with a specific sound, text and boolean.
   for (int i = 0; i <= musicString.length-1; i++) {
-    musicString[i] = new SoundLine(_x+(i*spacing), lowerPos, 600, _thickness, i + pitch, i, i);
+    musicString[i] = new SoundLine(_x+(i*spacing), lowerPos, upperPosStart, _thickness, i + pitch, i, i);
   }
 
-  //Variables used to calculate where the notes should be. They all start on the top line, wholeStep is used to jump 1 line, halfstep is used to jump in between lines. 
-  //The numbers are the times of wholeSteps down from the first line
+  //Variables used to calculate where the notes should be. They all start on the top line in the music sheet, wholeStep is used to jump one line, halfstep is used to jump in between lines. 
+  //The number variables are the times of wholeSteps down from the first line
   int wholeStep = 50;
   int halfStep = 25;
   int six = 6;
@@ -123,47 +117,24 @@ void setup() {
   int three = 3;
   int two = 2;
 
-  int rightAdjustment = 25;
-  int noteSpaces = 75;
-
-  //Initializes each note
-  for (int i = 0; i <= notes.length-1; i++) {
-    switch(i) {
-    case 0:
-      notes[0] = new Notation(sheetX+rightAdjustment+i*noteSpaces, sheetY+wholeStep*six, noteHeight, noteWidth, 255);
-      break;
-    case 1:
-      notes[1] = new Notation(sheetX+rightAdjustment+i*noteSpaces, sheetY+wholeStep*five+halfStep, noteHeight, noteWidth, 255);
-      break;
-    case 2:
-      notes[2] = new Notation(sheetX+rightAdjustment+i*noteSpaces, sheetY+wholeStep*five, noteHeight, noteWidth, 255);
-      break;
-    }
-    // notes[i] = new Notation(sheetX+rightAdjustment+i*noteSpaces, sheetY, 20, 15, 255);
-  }
-
-
-
-
-
   //First set of notes
-  notes[0] = new Notation(sheetX, sheetY+wholeStep*six, noteHeight, noteWidth, 255);
-  notes[1] = new Notation(sheetX, sheetY+wholeStep*five+halfStep, noteHeight, noteWidth, 255);
-  notes[2] = new Notation(sheetX, sheetY+wholeStep*five, noteHeight, noteWidth, 255);
-  notes[3] = new Notation(sheetX, sheetY+wholeStep*four, noteHeight, noteWidth, 255);
-  notes[4] = new Notation(sheetX, sheetY+wholeStep*three+halfStep, noteHeight, noteWidth, 255);
-  notes[5] = new Notation(sheetX, sheetY+wholeStep*three, noteHeight, noteWidth, 255);
-  notes[6] = new Notation(sheetX, sheetY+wholeStep*two+halfStep, noteHeight, noteWidth, 255);
+  notes[0] = new Notation(sheetX, sheetY+wholeStep*six, noteHeight, noteWidth, noteStroke);
+  notes[1] = new Notation(sheetX, sheetY+wholeStep*five+halfStep, noteHeight, noteWidth, noteStroke);
+  notes[2] = new Notation(sheetX, sheetY+wholeStep*five, noteHeight, noteWidth, noteStroke);
+  notes[3] = new Notation(sheetX, sheetY+wholeStep*four, noteHeight, noteWidth, noteStroke);
+  notes[4] = new Notation(sheetX, sheetY+wholeStep*three+halfStep, noteHeight, noteWidth, noteStroke);
+  notes[5] = new Notation(sheetX, sheetY+wholeStep*three, noteHeight, noteWidth, noteStroke);
+  notes[6] = new Notation(sheetX, sheetY+wholeStep*two+halfStep, noteHeight, noteWidth, noteStroke);
 
 
   //Second set of notes
-  notes[7] = new Notation(sheetX, sheetY+wholeStep*two+halfStep, noteHeight, noteWidth, 255);
-  notes[8] = new Notation(sheetX, sheetY+wholeStep*two, noteHeight, noteWidth, 255);
-  notes[9] = new Notation(sheetX, sheetY+wholeStep+halfStep, noteHeight, noteWidth, 255);
-  notes[10] = new Notation(sheetX, sheetY+halfStep, noteHeight, noteWidth, 255);
-  notes[11] = new Notation(sheetX, sheetY, noteHeight, noteWidth, 255);
-  notes[12] = new Notation(sheetX, sheetY-halfStep, noteHeight, noteWidth, 255);
-  notes[13] = new Notation(sheetX, sheetY-wholeStep, noteHeight, noteWidth, 255);
+  notes[7] = new Notation(sheetX, sheetY+wholeStep*two+halfStep, noteHeight, noteWidth, noteStroke);
+  notes[8] = new Notation(sheetX, sheetY+wholeStep*two, noteHeight, noteWidth, noteStroke);
+  notes[9] = new Notation(sheetX, sheetY+wholeStep+halfStep, noteHeight, noteWidth, noteStroke);
+  notes[10] = new Notation(sheetX, sheetY+halfStep, noteHeight, noteWidth, noteStroke);
+  notes[11] = new Notation(sheetX, sheetY, noteHeight, noteWidth, noteStroke);
+  notes[12] = new Notation(sheetX, sheetY-halfStep, noteHeight, noteWidth, noteStroke);
+  notes[13] = new Notation(sheetX, sheetY-wholeStep, noteHeight, noteWidth, noteStroke);
 
   //Third set of notes
   notes[14] = new Notation(sheetX, sheetY+wholeStep*five, noteHeight, noteWidth, 255);
@@ -174,48 +145,44 @@ void setup() {
   notes[19] = new Notation(sheetX, sheetY+wholeStep*two, noteHeight, noteWidth, 255);
   notes[20] = new Notation(sheetX, sheetY+wholeStep+halfStep, noteHeight, noteWidth, 255);
 
-
-  //Initialize noteChecker as false
+  //Initialize the whole noteChecker array as false
   for (int i = 0; i <= noteChecker.length-1; i++) {
     noteChecker[i] = false;
   }
 
-
   //First set of letters. Each set is given a letter individually.
-  notesLetters[0] = "C";
-  notesLetters[1] = "D";
-  notesLetters[2] = "E";
-  notesLetters[3] = "G";
-  notesLetters[4] = "A";
-  notesLetters[5] = "B";
-  notesLetters[6] = "C";
+  notesLetters[0] = 'C';
+  notesLetters[1] = 'D';
+  notesLetters[2] = 'E';
+  notesLetters[3] = 'G';
+  notesLetters[4] = 'A';
+  notesLetters[5] = 'B';
+  notesLetters[6] = 'C';
 
   //Second set of letters
-  notesLetters[7] = "C";
-  notesLetters[8] = "D";
-  notesLetters[9] = "E";
-  notesLetters[10] = "G";
-  notesLetters[11] = "A";
-  notesLetters[12] = "B";
-  notesLetters[13] = "C";
+  notesLetters[7] = 'C';
+  notesLetters[8] = 'D';
+  notesLetters[9] = 'E';
+  notesLetters[10] = 'G';
+  notesLetters[11] = 'A';
+  notesLetters[12] = 'B';
+  notesLetters[13] = 'C';
 
   //Third set of letters
-  notesLetters[14] = "C";
-  notesLetters[15] = "D";
-  notesLetters[16] = "E";
-  notesLetters[17] = "G";
-  notesLetters[18] = "A";
-  notesLetters[19] = "B";
-  notesLetters[20] = "C";
+  notesLetters[14] = 'C';
+  notesLetters[15] = 'D';
+  notesLetters[16] = 'E';
+  notesLetters[17] = 'G';
+  notesLetters[18] = 'A';
+  notesLetters[19] = 'B';
+  notesLetters[20] = 'C';
 
   //Images
-  arrowUp = loadImage("arrowUp.png");
+  arrowUp = loadImage("arrowUp.png"); //arrow image downloaded from: https://www.pngfuel.com/free-png/ofonr
   arrowDown = loadImage("arrowDown.png");
-
-  //Image reference: https://www.needpix.com/photo/download/1837726/music-background-music-note-digital-paper-piano-melody-texture-scrapbook-pattern-musical
-  guitarBackground = loadImage("guitarbackground.jpg");
-  gclef = loadImage("gclef.png");
-  fclef = loadImage("fclef.png");
+  guitarBackground = loadImage("guitarbackground.jpg"); //Image reference: https://www.needpix.com/photo/download/1837726/music-background-music-note-digital-paper-piano-melody-texture-scrapbook-pattern-musical
+  gclef = loadImage("gclef.png"); //
+  fclef = loadImage("fclef.png"); //
 }
 
 
@@ -223,38 +190,38 @@ void draw() {
   background(0);
   image(guitarBackground, 0, 0);
 
-  //First musicString in the array is the one most left and so on
+  //First musicString in the array is the one most left and so on. Display is called on each object.
   for (int i = 0; i <= musicString.length-1; i++) { 
     musicString[i].display();
   }
 
-
-  //Makes the strings go upwards in the beginning. Animation.
+  //Makes the strings go upwards in the beginning. Animation. The argument goes into limit in the stretch function. Each line has its own limit.
   for (int i = 0; i <= musicString.length-1; i++) {
     musicString[i].stretch(upperPos+(i*tilt));
   }
 
-  //Hitbox for the strings
+  //Hitbox for the strings. Each lines hitbox follows its position and tilt.
   for (int i = 0; i <= musicString.length-1; i++) {
     musicString[i].hitBox(i*spacing, i*tilt);
   }
 
   //Pitcher buttons
+  //Up
   pitchUpButton.display();
   pitchUpButton.mouseOver();
   pitchUpButton.pitchUp();
-
+  //Down
   pitchDownButton.display();
   pitchDownButton.mouseOver();
   pitchDownButton.pitchDown();
 
-
   //The music sheet where the notes are on
   sheetMusic.display(yPosSheet, xPosSheet);
 
+  //If one of the lines get hit noteChecker becomes true and displays the corresponding note visually.
   for (int i = 0; i <= notes.length-1; i++) {
     if (noteChecker[i]) {
-      notes[i].notes(yPosSheet, xPosSheet);
+      notes[i].notes(yPosSheet, xPosSheet+noteMiddle);
     }
   }
 }
