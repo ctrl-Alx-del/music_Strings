@@ -54,7 +54,7 @@ class SoundLine {
       text(notesLetters[text + pitch], textX+alignX, textY+alignY); //The noteLetters array is used to display characters above each line played. AlignX and AlignY recieves arguments that make them follow each line down.
       noteChecker[noteFollow + pitch] = true; //noteChecker is set to true if a note is hit. Pitch is used to go to the next set of booleans that are tied to the next set of lines     
       c = #FEFF05; //Color yellow if you hit the line. In hexadecimal Red is (F = 240 + E = 14) = 254, Green is (F = 240 + F = 15) = 255, Blue is (0 + 5) = 5.
-
+     
       if (reset) {      
         guitarSounds[sound + pitch].play(); //The sounds are tied to each line through for-loop in the main program line 108. So fx. musicString[0] has sound = 0, which is therefore 7.wav.
         reset = false; //reset makes the sound only play once. Sound only plays while both reset and the above if-statement on line 53 is true.

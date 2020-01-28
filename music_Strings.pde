@@ -23,12 +23,12 @@ boolean [] noteChecker = new boolean [guitarSounds.length]; //An array of boolea
 
 //Music sheet coordinates
 int sheetX = 900; 
-int sheetY = 50;
+int sheetY = 50; //sheetY gets multiplied in the for-loop inside the Notation class.
 int sheetX2 = 1400; 
 int sheetY2 = 250;
 int yPosSheet = 150; //YposSheet is for moving the notes and sheet around on the y-axis. The same goes for XposSheet.
 int xPosSheet = -200; 
-int noteMiddle = 250; //Adjusts the notes to always be in the middle of the music sheet
+int noteMiddle = 250; //Adjusts the notes to always be in the middle of the music sheet. As opposed to to the right or left side.
 
 //Note sizes
 int noteHeight = 20;
@@ -45,7 +45,7 @@ int upperPos = 250; // The maximum length the first line can get to
 int upperPosStart = 600; //upperPosStart is where all the lines start at. Should always be lower than upperPos or else all the strings will be above their limit to start with. 
 int _x = 50; //x coordinate for the first musicString
 int _thickness = 10; //Thickness of the lines
-int spacing = 100; //spacing = 100 gives a spacing that fits the window. Can be changed for bigger windows
+int spacing = 100; //spacing = 100 gives a spacing that fits the window. Can be changed for bigger windows. Increases distance between strings on the x-axis.
 int tilt = 50; // Controls how much each line should be lower than the other
 
 //Button variables
@@ -103,8 +103,8 @@ void setup() {
   guitarSounds[20] = new SoundFile(this, "C6.wav");
 
   //Initializes lines that you can play sounds on. Each line is separated with the int spacing. i ties each musicString[i] with a specific sound, text and boolean.
-  for (int i = 0; i <= musicString.length-1; i++) {
-    musicString[i] = new SoundLine(_x+(i*spacing), lowerPos, upperPosStart, _thickness, i + pitch, i, i);
+  for (int i = 0; i <= musicString.length-1; i++) { //5th argument is tying each sound to each string, 6th argument is the text above each string, 7th is so the booleans follow each string
+    musicString[i] = new SoundLine(_x+(i*spacing), lowerPos, upperPosStart, _thickness, i + pitch, i, i); //pitch can be removed here without effect, since it is inside the method as well
   }
 
   //Variables used to calculate where the notes should be. They all start on the top line in the music sheet, wholeStep is used to jump one line, halfstep is used to jump in between lines. 
@@ -145,7 +145,7 @@ void setup() {
   notes[19] = new Notation(sheetX, sheetY+wholeStep*two, noteHeight, noteWidth, 255);
   notes[20] = new Notation(sheetX, sheetY+wholeStep+halfStep, noteHeight, noteWidth, 255);
 
-  //Initialize the whole noteChecker array as false
+  //Initialize the whole noteChecker array as false. This was unecessary, program works without line 149-151. All are false as default.
   for (int i = 0; i <= noteChecker.length-1; i++) {
     noteChecker[i] = false;
   }
